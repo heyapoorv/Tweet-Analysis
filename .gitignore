@@ -2,6 +2,7 @@
 training.1600000.processed.noemoticon.csv
 processed_tweets.csv
 processed_tweets_notebook.csv
+# `dashboard_sample.csv` is intentionally versioned for cloud deployment.
 
 # Notebook-only artifacts
 model_notebook/

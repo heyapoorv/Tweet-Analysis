@@ -77,6 +77,10 @@ streamlit run app.py
 
 The dashboard contains overview, word, user, search, real-time classifier, model-report, and high-confidence-tweet tabs.
 
+For Streamlit Community Cloud, use `app.py` as the entry point. The repository includes a stratified `dashboard_sample.csv` for visualizations, while predictions use models trained on all 1.6 million tweets. If a locally generated `processed_tweets.csv` is present, the application automatically prefers the complete dashboard export.
+
+The app downloads the small NLTK stopwords corpus automatically on its first cloud start if the corpus is not already available.
+
 ## Correct interpretation
 
 - The task is binary: positive versus negative.

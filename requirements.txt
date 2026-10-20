@@ -7,4 +7,3 @@ matplotlib
 scikit-learn
 joblib
 nltk
-jupyterlab

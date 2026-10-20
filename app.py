@@ -113,6 +113,7 @@ hr { border-color: #21262d; }
 # ─────────────────────────────────────────────────────────────────────────────
 BASE_DIR      = Path(__file__).resolve().parent
 PROCESSED_CSV = BASE_DIR / "processed_tweets.csv"
+DEPLOYMENT_SAMPLE_CSV = BASE_DIR / "dashboard_sample.csv"
 MODEL_DIR     = BASE_DIR / "model"
 POS_COLOR     = "#2ea043"
 NEG_COLOR     = "#f85149"
@@ -143,11 +144,12 @@ def load_nlp():
     try:
         sw = set(stopwords.words("english")) - {"no", "nor", "not"}
     except LookupError:
-        st.error(
-            "NLTK stopwords are not installed. Run `python preprocess.py` once "
-            "before starting the dashboard."
-        )
-        st.stop()
+        try:
+            nltk.download("stopwords", quiet=True, raise_on_error=True)
+            sw = set(stopwords.words("english")) - {"no", "nor", "not"}
+        except Exception as exc:
+            st.error(f"Could not install the required NLTK stopwords corpus: {exc}")
+            st.stop()
     stem = PorterStemmer()
     return sw, stem
 
@@ -173,9 +175,10 @@ def clean_tweet(text: str) -> str:
 # ─────────────────────────────────────────────────────────────────────────────
 @st.cache_data(show_spinner="Loading tweet data ...")
 def load_data():
-    if not PROCESSED_CSV.exists():
+    data_path = PROCESSED_CSV if PROCESSED_CSV.exists() else DEPLOYMENT_SAMPLE_CSV
+    if not data_path.exists():
         return None
-    return pd.read_csv(PROCESSED_CSV)
+    return pd.read_csv(data_path)
 
 @st.cache_resource(show_spinner="Loading ML models ...")
 def load_models():
@@ -237,7 +240,13 @@ with st.sidebar:
     st.markdown("### 🤖 Model Info")
     st.success(f"**Best Model:** {best_name}")
     st.info(f"**Test Accuracy:** {best_acc:.2f}%")
-    st.caption(f"Dataset: {len(df):,} tweets | Sentiment140")
+    if PROCESSED_CSV.exists():
+        st.caption(f"Dashboard data: {len(df):,} tweets | Full Sentiment140 export")
+    else:
+        st.caption(
+            f"Dashboard data: {len(df):,} stratified deployment sample | "
+            "Models trained on all 1.6M tweets"
+        )
 
 # ─────────────────────────────────────────────────────────────────────────────
 # FILTER
