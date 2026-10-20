@@ -1,0 +1,24 @@
+# Large datasets and generated dashboard data
+training.1600000.processed.noemoticon.csv
+processed_tweets.csv
+processed_tweets_notebook.csv
+
+# Notebook-only artifacts
+model_notebook/
+.ipynb_checkpoints/
+
+# Python and local environments
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+env/
+
+# Streamlit and editor settings
+.streamlit/secrets.toml
+.vscode/
+.idea/
+
+# Operating-system files
+.DS_Store
+Thumbs.db

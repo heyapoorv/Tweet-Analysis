@@ -1,0 +1,23 @@
+{
+  "Naive Bayes": {
+    "accuracy": 77.83,
+    "train_time": 0.23,
+    "precision_pos": 78.03,
+    "recall_pos": 77.47,
+    "f1_pos": 77.75,
+    "precision_neg": 77.63,
+    "recall_neg": 78.19,
+    "f1_neg": 77.91
+  },
+  "Logistic Regression": {
+    "accuracy": 79.85,
+    "train_time": 21.05,
+    "precision_pos": 78.91,
+    "recall_pos": 81.48,
+    "f1_pos": 80.17,
+    "precision_neg": 80.85,
+    "recall_neg": 78.22,
+    "f1_neg": 79.52
+  },
+  "best_model": "Logistic Regression"
+}
